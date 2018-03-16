@@ -1,0 +1,21 @@
+{
+
+  "manifest_version": 2,
+  "name": "Summarize amazon reviews",
+  "version": "0.1",
+
+  "description": "Adds a red border to all webpages matching mozilla.org.",
+
+  "icons": {
+    "48": "icons/icon.bmp"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.amazon.com/*/dp/*"],
+      "js": ["script.js"]
+    }
+  ]
+
+}
+
