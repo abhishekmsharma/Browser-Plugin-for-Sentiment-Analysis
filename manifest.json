@@ -4,10 +4,15 @@
   "name": "Summarize amazon reviews",
   "version": "0.1",
 
-  "description": "Adds a red border to all webpages matching mozilla.org.",
+  "description": "sentiment analysis of amazon reviews",
 
   "icons": {
     "48": "icons/icon.bmp"
+  },
+
+  "browser_action": {
+    "default_icon": "icons/icon.bmp",
+    "default_popup": "popup.html"
   },
 
   "content_scripts": [
