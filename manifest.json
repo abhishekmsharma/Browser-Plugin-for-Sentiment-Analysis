@@ -12,7 +12,7 @@
     "scripts": ["background.js"]
 	},
 	"content_scripts": [{
-    "matches": ["*://*.amazon.com/gp/product/*"],
+    "matches": ["*://*.amazon.com/*"],
     "js": ["content.js"]
 	}],
 	"browser_action": {

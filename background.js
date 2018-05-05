@@ -5,7 +5,7 @@ function receiveFromSource(string_value) {
 }
 
 chrome.browserAction.onClicked.addListener(function (tab) {
-    if (urlRegex.test(tab.url)) {
+    if (0===0) {
 		console.log("Amazon product page detected");
         chrome.tabs.sendMessage(tab.id, {text: 'get_all_reviews_string'}, receiveFromSource);
 		chrome.tabs.sendMessage(tab.id, {text: 'get_home_page_reviews'}, receiveFromSource);
