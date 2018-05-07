@@ -19,7 +19,8 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
         var review_ratings = document.getElementsByClassName('review-rating');
         var review_dates = document.getElementsByClassName('review-date');
         var string_to_return = "Number of reviews on homepage: " + no_of_reviews + "\n------------ \n";
-        for (var i = 0; i < no_of_reviews; i++) {
+
+        for (var i = 0; i < review_dates.length; i++) {
             string_to_return = string_to_return + "Review " + (i + 1) + ": \n" + review_ratings[i].innerText + "\n" + "Posted on: " + review_dates[i].innerText + "\n \n" + reviews[i].innerText;
             string_to_return = string_to_return + "\n------------ \n";
         }
@@ -39,15 +40,19 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
         request.open("GET", all_reviews, true);
         request.send(null);
         request.onreadystatechange = function() {
-            // if (request.readyState === 4) {
+            if (request.readyState === 4) { //executes only once
                 alert("in if");
                 var doc_type = document.implementation.createDocumentType( 'html', '', '');
                 var dom = document.implementation.createDocument('', 'html', doc_type);
                 dom.innerHTML = request.responseText;
                 alert(request.responseText);
-                alert(typeof(dom));
-                alert(typeof(request.responseText));
-            // }
+                alert("now..");
+                // alert(typeof(dom.getElementsByClassName("a-section a-spacing-none review-views celwidget"))); //Object !
+                alert(dom.getElementsByClassName("a-section review").innerHTML);
+                let str_reviews = request.responseText;
+                let reviews = /<b>(.*?)<\/b>/.exec(str_reviews);
+                alert(reviews[0]);
+            }
         };
 
         if (all_reviews != null) {
