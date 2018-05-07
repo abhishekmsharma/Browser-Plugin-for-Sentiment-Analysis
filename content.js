@@ -39,8 +39,15 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
         request.open("GET", all_reviews, true);
         request.send(null);
         request.onreadystatechange = function() {
-            if (request.readyState === 4)
+            // if (request.readyState === 4) {
+                alert("in if");
+                var doc_type = document.implementation.createDocumentType( 'html', '', '');
+                var dom = document.implementation.createDocument('', 'html', doc_type);
+                dom.innerHTML = request.responseText;
                 alert(request.responseText);
+                alert(typeof(dom));
+                alert(typeof(request.responseText));
+            // }
         };
 
         if (all_reviews != null) {
