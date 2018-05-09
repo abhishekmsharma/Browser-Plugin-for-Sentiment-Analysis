@@ -25,39 +25,17 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
             string_to_return = string_to_return + "\n------------ \n";
         }
         alert(string_to_return);
-
-        function makeHttpObject() {
-            try {return new XMLHttpRequest();}
-            catch (error) {}
-            try {return new ActiveXObject("Msxml2.XMLHTTP");}
-            catch (error) {}
-            try {return new ActiveXObject("Microsoft.XMLHTTP");}
-            catch (error) {}
-
-            throw new Error("Could not create HTTP request object.");
+        var ratings = [];
+        for (var i=0; i<review_dates.length; i++) {
+            ratings.push((review_ratings[i].innerText.substring(0,5)).match(/\d+([.]\d+)?/g));
         }
-        var request = makeHttpObject();
-        request.open("GET", all_reviews, true);
-        request.send(null);
-        request.onreadystatechange = function() {
-            if (request.readyState === 4) { //executes only once
-                alert("in if");
-                var doc_type = document.implementation.createDocumentType( 'html', '', '');
-                var dom = document.implementation.createDocument('', 'html', doc_type);
-                dom.innerHTML = request.responseText;
-                alert(request.responseText);
-                alert("now..");
-                // alert(typeof(dom.getElementsByClassName("a-section a-spacing-none review-views celwidget"))); //Object !
-                alert(dom.getElementsByClassName("a-section review").innerHTML);
-                let str_reviews = request.responseText;
-                let reviews = /<b>(.*?)<\/b>/.exec(str_reviews);
-                alert(reviews[0]);
-            }
-        };
-
-        if (all_reviews != null) {
-            alert(all_reviews);
+        alert(ratings);
+        var dates = [];
+        for (var i=0; i<review_dates.length; i++) {
+            dates.push(review_dates[i].innerText);
         }
+        alert(dates);
+
         sendResponse(string_to_return);
     }
 });
