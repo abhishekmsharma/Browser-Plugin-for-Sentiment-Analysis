@@ -11,3 +11,8 @@ chrome.browserAction.onClicked.addListener(function (tab) {
 		chrome.tabs.sendMessage(tab.id, {text: 'get_home_page_reviews'}, receiveFromSource);
     }
 });
+
+chrome.runtime.onmessage.addListener(function(response,sender,sendResponse){
+    alert("Finally here");
+    alert(response);
+});

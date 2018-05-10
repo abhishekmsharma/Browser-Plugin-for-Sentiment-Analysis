@@ -27,5 +27,8 @@
         "description": "Opens hello.html"
       }
     },
-	"permissions": ["activeTab"]
+	"permissions": ["activeTab"],
+   "externally_connectable": {
+     "matches": ["*://*.abhishekmsharma.com/*"]
+   }
   }
