@@ -32,22 +32,20 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
         for (var i=0; i<review_dates.length; i++) {
             ratings.push((review_ratings[i].innerText.substring(0,5)).match(/\d+([.]\d+)?/g));
         }
-        alert(ratings);
+
 
         for (var i=0; i<review_dates.length; i++) {
             dates.push(review_dates[i].innerText);
         }
-        alert(dates);
+
 
         for (var i=0; i<review_dates.length; i++) {
             comments.push(reviews[i].innerText);
         }
-        alert(comments);
         sendResponse([ratings,dates,comments]);
     }
 
 });
-// https://www.youtube.com/watch?v=wjiku6X-hd8
-chrome.runtime.sendMessage(comments);
-
-// https://developer.chrome.com/apps/messaging
+ratings = [];
+dates = [];
+comments = [];
