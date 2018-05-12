@@ -1,5 +1,3 @@
-var urlRegex = /^https?:\/\/(?:[^./?#]+\.)?amazon\.com\/gp\/product/;
-
 function receiveFromSource(string_value) {
     console.log('Returned string:\n' + string_value);
 
