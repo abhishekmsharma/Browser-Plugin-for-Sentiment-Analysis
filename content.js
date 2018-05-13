@@ -6,7 +6,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
 
     if (msg.text === 'get_all_reviews_string') {
         //sendResponse(document.all[0].outerHTML);
-        console.log("Trying the get all reviews string");
+        console.log("Trying the get all reviews strings");
         alert(document.getElementById('acrCustomerReviewText').innerHTML);
         sendResponse(document.getElementById('acrCustomerReviewText').innerHTML);
     }

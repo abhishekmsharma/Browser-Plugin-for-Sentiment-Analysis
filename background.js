@@ -23,3 +23,14 @@ chrome.browserAction.onClicked.addListener(function (tab) {
 		chrome.tabs.sendMessage(tab.id, {text: 'get_home_page_reviews'}, receiveFromSource);
     }
 });
+
+
+chrome.runtime.onMessage.addListener( function(request,sender,sendResponse)
+{
+	
+    if( request.greeting === "GetURL" )
+    {
+		chrome.tabs.sendMessage(tab.id, {text: 'get_all_reviews_string'}, receiveFromSource);
+    }
+}
+);
