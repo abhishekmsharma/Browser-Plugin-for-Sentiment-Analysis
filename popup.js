@@ -28,11 +28,16 @@ function test_function () {
     }
 }
 
-function getURL() {
+function get_all_reviews_string() {
 	
     chrome.runtime.sendMessage({amazon_action: "get_all_reviews_string"},receiveFromSource);
 	//chrome.browserAction.onClick(tab);
 }
 
+function get_home_page_reviews() {
+	chrome.runtime.sendMessage({amazon_action: "get_home_page_reviews"},receiveFromSource);
+}
+
 document.getElementById('do-count').onclick = count;
-document.getElementById('get-reviews').onclick = getURL;
+document.getElementById('get-reviews').onclick = get_all_reviews_string;
+document.getElementById('get-homepage-reviews').onclick = get_home_page_reviews;

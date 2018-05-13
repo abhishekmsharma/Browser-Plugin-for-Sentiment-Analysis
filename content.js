@@ -13,7 +13,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
 
     else if (msg.text == 'get_home_page_reviews') {
         var reviews = document.getElementsByClassName('a-expander-content a-expander-partial-collapse-content');
-        alert("Reviews is " + reviews);
+        //alert("Reviews is " + reviews);
         if (reviews === undefined) {
             reviews = document.getElementsByClassName('a-expander-collapsed-height a-row a-expander-container a-expander-partial-collapse-container');
         }
@@ -27,7 +27,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
             string_to_return = string_to_return + "Review " + (i + 1) + ": \n" + review_ratings[i].innerText + "\n" + "Posted on: " + review_dates[i].innerText + "\n \n" + reviews[i].innerText;
             string_to_return = string_to_return + "\n------------ \n";
         }
-        alert(string_to_return);
+        //alert(string_to_return);
 
         for (var i=0; i<review_dates.length; i++) {
             ratings.push((review_ratings[i].innerText.substring(0,5)).match(/\d+([.]\d+)?/g));

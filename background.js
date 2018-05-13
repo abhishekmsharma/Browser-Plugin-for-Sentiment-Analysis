@@ -22,10 +22,12 @@ chrome.runtime.onMessage.addListener( function(request,sender,sendResponse)
     function callback(tabs) {
         var currentTab = tabs[0];
         console.log(currentTab);
-        if( request.amazon_action === "get_all_reviews_string" )
-        {
+        if( request.amazon_action === "get_all_reviews_string" ) {
             chrome.tabs.sendMessage(currentTab.id, {text: 'get_all_reviews_string'}, receiveFromSource);
         }
+		else if (request.amazon_action === "get_home_page_reviews") {
+			chrome.tabs.sendMessage(currentTab.id, {text: 'get_home_page_reviews'}, receiveFromSource);
+		}
     }
     chrome.tabs.query(query, callback);
     sendResponse(return_string);
