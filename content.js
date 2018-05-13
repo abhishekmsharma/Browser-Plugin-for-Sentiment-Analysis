@@ -35,7 +35,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
             ratings.push(temp_review_string);
 			dates.push(review_dates[i].innerText);
 			comments.push(reviews[i].innerText);
-			final_string_to_return += temp_review_string + "$" + review_dates[i].innerText + "%";
+			final_string_to_return += review_dates[i].innerText + "$" + temp_review_string + "%";
         }
 		
 		for (var i = 0; i < dates.length; i++) {
