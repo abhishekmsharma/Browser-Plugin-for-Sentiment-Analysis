@@ -1,17 +1,8 @@
+var return_string;
+
 function receiveFromSource(string_value) {
     console.log('Returned string:\n' + string_value);
-
-    var data = new FormData();
-    data.append('ratings', string_value[0]);
-    data.append('dates', string_value[1]);
-    data.append('comments', string_value[2]);
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://abhishekmsharma.com/test.html', true);
-    xhr.onload = function () {
-        // do something to response
-        console.log(this.responseText);
-    };
-    xhr.send(data);
+    return_string = string_value;
 }
 
 // Can we do this ? http://php.net/manual/en/reserved.variables.post.php
@@ -27,10 +18,16 @@ chrome.browserAction.onClicked.addListener(function (tab) {
 
 chrome.runtime.onMessage.addListener( function(request,sender,sendResponse)
 {
-	
-    if( request.greeting === "GetURL" )
-    {
-		chrome.tabs.sendMessage(tab.id, {text: 'get_all_reviews_string'}, receiveFromSource);
+    var query = { active: true, currentWindow: true };
+    function callback(tabs) {
+        var currentTab = tabs[0];
+        console.log(currentTab);
+        if( request.amazon_action === "get_all_reviews_string" )
+        {
+            chrome.tabs.sendMessage(currentTab.id, {text: 'get_all_reviews_string'}, receiveFromSource);
+        }
     }
+    chrome.tabs.query(query, callback);
+    sendResponse(return_string);
 }
 );

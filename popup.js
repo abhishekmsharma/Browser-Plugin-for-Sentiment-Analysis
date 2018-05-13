@@ -9,8 +9,6 @@ function receiveFromSource(string_value) {
     console.log('Returned string:\n' + string_value);
 	document.getElementById('demo').textContent = 'hello';
 	document.getElementById('review_string').textContent = string_value;
-
-    
 }
 
 // Can we do this ? http://php.net/manual/en/reserved.variables.post.php
@@ -32,8 +30,8 @@ function test_function () {
 
 function getURL() {
 	
-    //chrome.runtime.sendMessage({greeting: "GetURL"},receiveFromSource);
-	chrome.browserAction.onClick(tab);
+    chrome.runtime.sendMessage({amazon_action: "get_all_reviews_string"},receiveFromSource);
+	//chrome.browserAction.onClick(tab);
 }
 
 document.getElementById('do-count').onclick = count;
