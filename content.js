@@ -2,6 +2,7 @@
 let ratings = [];
 let dates = [];
 let comments = [];
+let final_string_to_return = "";
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
 
     if (msg.text === 'get_all_reviews_string') {
@@ -30,19 +31,19 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
         //alert(string_to_return);
 
         for (var i=0; i<review_dates.length; i++) {
-            ratings.push((review_ratings[i].innerText.substring(0,5)).match(/\d+([.]\d+)?/g));
+			let temp_review_string = (review_ratings[i].innerText.substring(0,5)).match(/\d+([.]\d+)?/g);
+            ratings.push(temp_review_string);
+			dates.push(review_dates[i].innerText);
+			comments.push(reviews[i].innerText);
+			final_string_to_return += temp_review_string + "$" + review_dates[i].innerText + "%";
         }
-
-
-        for (var i=0; i<review_dates.length; i++) {
-            dates.push(review_dates[i].innerText);
+		
+		for (var i = 0; i < dates.length; i++) {
+            string_to_return = string_to_return + "Review " + (i + 1) + ": \n" + review_ratings[i].innerText + "\n" + "Posted on: " + review_dates[i].innerText + "\n \n" + reviews[i].innerText;
+            string_to_return = string_to_return + "\n------------ \n";
         }
-
-
-        for (var i=0; i<review_dates.length; i++) {
-            comments.push(reviews[i].innerText);
-        }
-        sendResponse([ratings,dates,comments]);
+		
+        sendResponse(final_string_to_return);
     }
 
 });
