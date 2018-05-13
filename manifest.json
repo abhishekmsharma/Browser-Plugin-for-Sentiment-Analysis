@@ -35,5 +35,6 @@
 	
 	"externally_connectable": {
      "matches": ["*://*.abhishekmsharma.com/*"]
-	}
+	},
+   "content_security_policy": "script-src 'self' https://www.gstatic.com 'unsafe-eval'; object-src 'self'"
   }
