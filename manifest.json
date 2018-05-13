@@ -3,21 +3,24 @@
     "description" : "This extension is to analyze sentiments and visualize reviews from Amazon’s product webpages to provide an overview of user feedback along with average rating against time",
     "version": "1.0",
     "manifest_version": 2,
+	
     "browser_action": {
+	  "default_title": "Test Extension",
       "default_popup": "hello.html",
       "default_icon": "hello_extensions.png"
     },
+	
 	"background": {
     "persistent": false,
     "scripts": ["background.js"]
 	},
+	
 	"content_scripts": [{
     "matches": ["*://*.amazon.com/*"],
     "js": ["content.js"]
 	}],
-	"browser_action": {
-    "default_title": "Test Extension"
-  },
+	
+	
 	"commands": {
       "_execute_browser_action": {
         "suggested_key": {
@@ -25,10 +28,12 @@
           "mac": "MacCtrl+Shift+F"
         },
         "description": "Opens hello.html"
-      }
+	  }
     },
+	
 	"permissions": ["activeTab"],
-   "externally_connectable": {
+	
+	"externally_connectable": {
      "matches": ["*://*.abhishekmsharma.com/*"]
-   }
+	}
   }

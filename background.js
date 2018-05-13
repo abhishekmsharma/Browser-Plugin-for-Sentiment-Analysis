@@ -6,7 +6,7 @@ function receiveFromSource(string_value) {
     data.append('dates', string_value[1]);
     data.append('comments', string_value[2]);
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'https://kunaldeshmukh.com/expriments.html', true);
+    xhr.open('POST', 'http://abhishekmsharma.com/test.html', true);
     xhr.onload = function () {
         // do something to response
         console.log(this.responseText);
