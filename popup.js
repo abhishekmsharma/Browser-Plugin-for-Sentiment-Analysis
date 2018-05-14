@@ -1,11 +1,13 @@
-var src="https://www.gstatic.com/charts/loader.js";
+var goole_visualization_src="https://www.gstatic.com/charts/loader.js";
+var sentiment_src="sentiment.js";
 function dynamicallyLoadScript(url) {
     var script = document.createElement("script"); // Make a script DOM node
     script.src = url; // Set it's src to the provided URL
 
     document.head.appendChild(script); // Add it to the end of the head section of the page (could change 'head' to 'body' to add it to the end of the body section instead)
 }
-dynamicallyLoadScript(src);
+dynamicallyLoadScript(goole_visualization_src);
+dynamicallyLoadScript(sentiment_src);
 
 var a=0;
 var arr_rating_date = [];
@@ -16,6 +18,16 @@ function count() {
     document.getElementById('demo').textContent = a;
 }
 
+function convertDate(string_date) {
+	var formatted_date = string_date.replace(",","");
+	var date_array = formatted_date.split(" ");
+	var month_number = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"].indexOf(date_array[0].toLowerCase()) + 1;
+	month_num = "" + month_number;
+	var pad = "00";
+	var final_date = date_array[2] + (pad.substring(0, pad.length - month_num.length)+month_num) + (pad.substring(0, pad.length - date_array[1].length)+date_array[1]);
+	return final_date;
+}
+
 function receiveFromSource(string_value) {
     console.log('Returned string:\n' + string_value);
 	document.getElementById('demo').textContent = 'hello';
@@ -23,6 +35,11 @@ function receiveFromSource(string_value) {
 }
 
 function receiveReviewsFromSource(string_value) {
+	
+	var sentimood = new Sentimood();
+	var analysis = sentimood.analyze('Node is good');
+	console.log("Analysis: " + analysis.score);
+	
     console.log('Returned string:\n' + string_value);
 	document.getElementById('review_string').textContent = string_value;
 	if (string_value != null) {
@@ -37,8 +54,12 @@ function receiveReviewsFromSource(string_value) {
         google.charts.setOnLoadCallback(drawChart);
         var temp_arr = [];
         for (var j=0; j<5; j++) {
-            temp_arr[j] = arr_rating_date[j];
+            temp_arr[j] = [convertDate(arr_rating_date[j][0]), parseInt(arr_rating_date[j][1])];
         }
+		temp_arr.sort(function(a,b) {
+        return a[0]-b[0]
+		});
+		temp_arr.splice(0, 0, ["Dates", "Ratings"]);
         console.log(temp_arr);
         function drawChart() {
             var data = google.visualization.arrayToDataTable(temp_arr);
