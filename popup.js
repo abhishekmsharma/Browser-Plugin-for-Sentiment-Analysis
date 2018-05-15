@@ -3,20 +3,12 @@ var sentiment_src="sentiment.js";
 function dynamicallyLoadScript(url) {
     var script = document.createElement("script"); // Make a script DOM node
     script.src = url; // Set it's src to the provided URL
-
     document.head.appendChild(script); // Add it to the end of the head section of the page (could change 'head' to 'body' to add it to the end of the body section instead)
 }
 dynamicallyLoadScript(goole_visualization_src);
 dynamicallyLoadScript(sentiment_src);
 
-var a=0;
 var arr_rating_date = [];
-
-function count() {
-    a++;
-	console.log("Incrementing a");
-    document.getElementById('demo').textContent = a;
-}
 
 function convertDate(string_date) {
 	var formatted_date = string_date.replace(",","");
@@ -28,28 +20,23 @@ function convertDate(string_date) {
 	return final_date;
 }
 
-function receiveFromSource(string_value) {
-    console.log('Returned string:\n' + string_value);
-	document.getElementById('demo').textContent = 'hello';
-	document.getElementById('review_string').textContent = string_value;
+
+function receiveSentimentFromSource(string_value) {
+	var sentimood = new Sentimood();
+	console.log("Reviews: " + string_value);
+	var analysis = sentimood.analyze(string_value);
+	console.log("Positive score: " + analysis.score);
+	document.getElementById('sentiment_text').textContent = "Sentiment score: " + analysis.score;
 }
 
 function receiveReviewsFromSource(string_value) {
-	
-	var sentimood = new Sentimood();
-	var analysis = sentimood.analyze('Node is good');
-	console.log("Analysis: " + analysis.score);
-	
     console.log('Returned string:\n' + string_value);
-	document.getElementById('review_string').textContent = string_value;
 	if (string_value != null) {
         var ratings_date = string_value.split("%");
         for (var i = 0; i < ratings_date.length; i++) {
             var temp_arr = ratings_date[i].split("$");
             arr_rating_date.push(temp_arr);
         }
-
-        document.getElementById('review_string').textContent = arr_rating_date;
         google.charts.load("current", {"packages": ["corechart"]});
         google.charts.setOnLoadCallback(drawChart);
         var temp_arr = [];
@@ -57,13 +44,12 @@ function receiveReviewsFromSource(string_value) {
             temp_arr[j] = [convertDate(arr_rating_date[j][0]), parseInt(arr_rating_date[j][1])];
         }
 		temp_arr.sort(function(a,b) {
-        return a[0]-b[0]
+			return a[0]-b[0]
 		});
 		temp_arr.splice(0, 0, ["Dates", "Ratings"]);
         console.log(temp_arr);
         function drawChart() {
             var data = google.visualization.arrayToDataTable(temp_arr);
-
             var options = {
                 title: "Amazon Ratings vs Review Date",
                 curveType: "line",
@@ -75,11 +61,8 @@ function receiveReviewsFromSource(string_value) {
                         min: 1
                     }
                 }
-
             };
-
             var chart = new google.visualization.LineChart(document.getElementById("curve_chart"));
-
             chart.draw(data, options);
         }
 
@@ -87,33 +70,13 @@ function receiveReviewsFromSource(string_value) {
 	
 }
 
-function getReviews() {
-	chrome.tabs.sendMessage(tab.id, {text: 'get_all_reviews_string'}, receiveFromSource);
-	chrome.tabs.executeScript({
-    file: 'alert.js'
-  }); 
+function get_graph() {
+	chrome.runtime.sendMessage({amazon_action: "get_graph"},receiveReviewsFromSource);
 }
 
-function test_function () {
-    if (0===0) {
-		console.log("Amazon product page detected");
-        chrome.tabs.sendMessage(tab.id, {text: 'get_all_reviews_string'}, receiveFromSource);
-		chrome.tabs.sendMessage(tab.id, {text: 'get_home_page_reviews'}, receiveFromSource);
-    }
+function get_sentiment_score() {
+	chrome.runtime.sendMessage({amazon_action: "get_sentiment_score"},receiveSentimentFromSource);
 }
 
-function get_all_reviews_string() {
-	
-    chrome.runtime.sendMessage({amazon_action: "get_all_reviews_string"},receiveFromSource);
-	//chrome.browserAction.onClick(tab);
-}
-
-function get_home_page_reviews() {
-	chrome.runtime.sendMessage({amazon_action: "get_home_page_reviews"},receiveReviewsFromSource);
-}
-
-
-
-document.getElementById('do-count').onclick = count;
-document.getElementById('get-reviews').onclick = get_all_reviews_string;
-document.getElementById('get-homepage-reviews').onclick = get_home_page_reviews;
+document.getElementById('get-homepage-reviews').onclick = get_graph;
+document.getElementById('get-sentiment-score').onclick = get_sentiment_score;

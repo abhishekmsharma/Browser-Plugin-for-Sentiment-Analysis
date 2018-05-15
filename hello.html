@@ -1,19 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.button2 {background-color: #008CBA;} /* Blue */
+</style>
 </head>
 <body>
-<p id="demo">=a</p>
-<p id="review_string">a</p>
-<p id="homepage_reviews">a</p>
-<button type="button" id="do-count">Count</button>
-<button type="button" id="get-reviews">Get reviews string</button>
-<button type="button" id="get-homepage-reviews">Get homepage reviews</button>
-
+<img src="amazon-icon.png" width="15" height="15"><b><font color="orange"> Amazon Reviews Sentiment Analysis and Ratings Graph Visualization</font></b>
 <br>
-
-<div id="curve_chart" style="width: 900px; height: 500px"></div>
-
+<button class="button" type="button" id="get-homepage-reviews">Get time vs. ratings graph</button>
+<button class="button button2" type="button" id="get-sentiment-score">Sentiment score of reviews</button>
+<p>
+<h3 id="sentiment_text"></h3>
+<div id="curve_chart" style="width: 900px; height: 450px"></div>
 <script src="popup.js"></script>
 </body>
 </html>

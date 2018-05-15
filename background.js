@@ -5,31 +5,22 @@ function receiveFromSource(string_value) {
     return_string = string_value;
 }
 
-// Can we do this ? http://php.net/manual/en/reserved.variables.post.php
-
-chrome.browserAction.onClicked.addListener(function (tab) {
-    if (0===0) {
-		console.log("Amazon product page detected");
-        chrome.tabs.sendMessage(tab.id, {text: 'get_all_reviews_string'}, receiveFromSource);
-		chrome.tabs.sendMessage(tab.id, {text: 'get_home_page_reviews'}, receiveFromSource);
-    }
-});
-
-
-chrome.runtime.onMessage.addListener( function(request,sender,sendResponse)
+chrome.runtime.onMessage.addListener(function(request,sender,sendResponse)
 {
     var query = { active: true, currentWindow: true };
     function callback(tabs) {
         var currentTab = tabs[0];
         console.log(currentTab);
-        if( request.amazon_action === "get_all_reviews_string" ) {
-            chrome.tabs.sendMessage(currentTab.id, {text: 'get_all_reviews_string'}, receiveFromSource);
-        }
-		else if (request.amazon_action === "get_home_page_reviews") {
-			chrome.tabs.sendMessage(currentTab.id, {text: 'get_home_page_reviews'}, receiveFromSource);
+        if (request.amazon_action === "get_graph") {
+			chrome.tabs.sendMessage(currentTab.id, {text: 'get_graph'}, receiveFromSource);
+		}
+		else if (request.amazon_action === "get_sentiment_score") {
+			chrome.tabs.sendMessage(currentTab.id, {text: 'get_sentiment_score'}, receiveFromSource);
 		}
     }
+	var currentTime = new Date().getTime();
+	while (currentTime + 2000 >= new Date().getTime()) {}
     chrome.tabs.query(query, callback);
+	console.log("Returning: " + return_string);
     sendResponse(return_string);
-}
-);
+});

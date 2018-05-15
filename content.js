@@ -5,14 +5,7 @@ let comments = [];
 let final_string_to_return = "";
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
 
-    if (msg.text === 'get_all_reviews_string') {
-        //sendResponse(document.all[0].outerHTML);
-        console.log("Trying the get all reviews strings");
-        //alert(document.getElementById('acrCustomerReviewText').innerHTML);
-        sendResponse(document.getElementById('acrCustomerReviewText').innerHTML);
-    }
-
-    else if (msg.text == 'get_home_page_reviews') {
+    if (msg.text == 'get_graph') {
         var reviews = document.getElementsByClassName('a-expander-content a-expander-partial-collapse-content');
         //alert("Reviews is " + reviews);
         if (reviews === undefined) {
@@ -45,6 +38,19 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
 		
         sendResponse(final_string_to_return);
     }
+	
+	else if (msg.text === 'get_sentiment_score') {
+		var reviews = document.getElementsByClassName('a-expander-content a-expander-partial-collapse-content');
+        if (reviews === undefined) {
+            reviews = document.getElementsByClassName('a-expander-collapsed-height a-row a-expander-container a-expander-partial-collapse-container');
+        }
+		var no_of_reviews = reviews.length;
+		var string_to_return = "";
+		for (var i=0; i<no_of_reviews; i++) {
+			string_to_return+=reviews[i].innerText;
+		}
+		sendResponse(string_to_return);
+	}
 
 });
 ratings = [];
