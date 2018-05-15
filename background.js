@@ -18,9 +18,8 @@ chrome.runtime.onMessage.addListener(function(request,sender,sendResponse)
 			chrome.tabs.sendMessage(currentTab.id, {text: 'get_sentiment_score'}, receiveFromSource);
 		}
     }
-	var currentTime = new Date().getTime();
-	while (currentTime + 2000 >= new Date().getTime()) {}
     chrome.tabs.query(query, callback);
+	
 	console.log("Returning: " + return_string);
     sendResponse(return_string);
 });
