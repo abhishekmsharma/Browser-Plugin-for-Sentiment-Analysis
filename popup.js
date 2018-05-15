@@ -20,6 +20,17 @@ function convertDate(string_date) {
 	return final_date;
 }
 
+function formatDateString(date_int){
+    console.log("in format date string");
+    let date_in = date_int.toString();
+    console.log(date_in);
+    let dd = date_in.substr(6,2);
+    console.log(date_in);
+    let mm = date_in.substr(4,2);
+    let yyyy = date_in.substr(0,4);
+    return mm+"/"+dd+"/"+yyyy;
+}
+
 
 function receiveSentimentFromSource(string_value) {
 	var sentimood = new Sentimood();
@@ -46,6 +57,9 @@ function receiveReviewsFromSource(string_value) {
 		temp_arr.sort(function(a,b) {
 			return a[0]-b[0]
 		});
+        for (var j=0; j<5; j++) {
+            temp_arr[j] = [formatDateString(temp_arr[j][0]), temp_arr[j][1]];
+        }
 		temp_arr.splice(0, 0, ["Dates", "Ratings"]);
         console.log(temp_arr);
         function drawChart() {
