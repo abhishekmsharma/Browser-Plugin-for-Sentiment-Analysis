@@ -19,7 +19,6 @@ chrome.runtime.onMessage.addListener(function(request,sender,sendResponse)
 		}
     }
     chrome.tabs.query(query, callback);
-	
 	console.log("Returning: " + return_string);
     sendResponse(return_string);
 });

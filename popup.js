@@ -9,6 +9,7 @@ dynamicallyLoadScript(goole_visualization_src);
 dynamicallyLoadScript(sentiment_src);
 
 var arr_rating_date = [];
+var MAX_REVIEWS = 5;
 
 function convertDate(string_date) {
 	var formatted_date = string_date.replace(",","");
@@ -51,13 +52,13 @@ function receiveReviewsFromSource(string_value) {
         google.charts.load("current", {"packages": ["corechart"]});
         google.charts.setOnLoadCallback(drawChart);
         var temp_arr = [];
-        for (var j=0; j<5; j++) {
+        for (var j=0; j<MAX_REVIEWS; j++) {
             temp_arr[j] = [convertDate(arr_rating_date[j][0]), parseInt(arr_rating_date[j][1])];
         }
 		temp_arr.sort(function(a,b) {
 			return a[0]-b[0]
 		});
-        for (var j=0; j<5; j++) {
+        for (var j=0; j<MAX_REVIEWS; j++) {
             temp_arr[j] = [formatDateString(temp_arr[j][0]), temp_arr[j][1]];
         }
 		temp_arr.splice(0, 0, ["Dates", "Ratings"]);
