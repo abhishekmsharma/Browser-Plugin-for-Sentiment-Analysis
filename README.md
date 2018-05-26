@@ -1,4 +1,4 @@
-# Browser_plugin_Sentiment_Analysis
+# Browser_Plugin_Sentiment_Analysis
 This is a Browser plugin to perform sentiment analysis of amazon product reviews
 
 How to install this pulgin:
